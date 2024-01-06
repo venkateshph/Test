@@ -9,7 +9,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/Login" exact element={<App/>}></Route>
+        <Route path="/" exact element={<App/>}></Route>
         <Route path="/Homepage" element={<Homepage data={false}/>}></Route>
       </Routes>
     </BrowserRouter>
