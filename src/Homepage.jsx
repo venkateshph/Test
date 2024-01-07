@@ -1,14 +1,18 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
-const Homepage = () =>{
-    const {data} = useLocation();
-    return(
-        <>
-            <h1>venkatesh</h1>
-            
-        </>
-    )
-    
-}
+import { useLocation, useNavigate } from "react-router-dom";
+import News from "./News";
+import Exam from "./Exam";
+import Upload from "./Upload";
+import { Navigate } from "react-router-dom";
+const Homepage = () => {
+  
+  return (
+    <>
+   
+      <News></News>
+      
+    </>
+  );
+};
 
-export default Homepage; 
+export default Homepage;

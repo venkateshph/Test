@@ -1,28 +1,43 @@
 import React, { useEffect, useState } from "react";
 import "./fotter.css";
-import { Button, Typography, Form, Input, Space } from "antd";
-import read from "./login";
+import { Button, Typography, Form, Input, Skeleton } from "antd";
+
 const { Title } = Typography;
 
-import { useNavigate } from "react-router-dom";
+
+import supabase  from "./login";
+
+
 
 const onFinishFailed = (errorInfo) => {
-  //console.log("Failed:", errorInfo);
+  
   alert("Enter username or password");
 };
 
 const App = () => {
-  const navigation = useNavigate();
-  const [data,setdata] = useState(false);
+
+  async function va(username,password){
+
+    //console.log("Loading")
+    let {data:username_data,err} =  await supabase.from('Data').select('*')
+    //console.log("Done")
+    if(username_data[0].Username == username && password == username_data[0].Password){
+      
+      console.log("correct")
+      
+    }else{
+      console.log("wrong");
+    }
+  }
+
   const onFinish = (values) => {
-    //console.log("Success:", values);
-    read(values.username, values.password);
-    setdata(true)
-    navigation("/Homepage", {state :{data}})
-  
+    //console.log("Success:", values.username);
+    va(values.username,values.password)
+    
   };
   return (
     <>
+    
       <div class="postion-relative">
         <div class="position-absolute top-50 start-50 translate-middle">
           <Title level={3} class="text-center">
