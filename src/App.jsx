@@ -1,106 +1,90 @@
-import React, { useEffect, useState } from "react";
-import "./fotter.css";
-import { Button, Typography, Form, Input, Skeleton } from "antd";
-
-const { Title } = Typography;
-
-
-import supabase  from "./login";
-
-
-
-const onFinishFailed = (errorInfo) => {
-  
-  alert("Enter username or password");
-};
-
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import Login from "./Pages/Login";
+import Homepage from "./Pages/Homepage";
+import News from "./Pages/News";
+import Safe from "./security/safe";
+import Fotter from "./Pages/Fotter";
+import DataUpload from "./Pages/DataUpload";
+import Student from "./Pages/Student";
+import Teacher from "./Pages/Teacher";
+import "./App.css"
 const App = () => {
-
-  async function va(username,password){
-
-    //console.log("Loading")
-    let {data:username_data,err} =  await supabase.from('Data').select('*')
-    //console.log("Done")
-    if(username_data[0].Username == username && password == username_data[0].Password){
-      
-      console.log("correct")
-      
-    }else{
-      console.log("wrong");
-    }
-  }
-
-  const onFinish = (values) => {
-    //console.log("Success:", values.username);
-    va(values.username,values.password)
-    
-  };
   return (
     <>
-    
-      <div class="postion-relative">
-        <div class="position-absolute top-50 start-50 translate-middle">
-          <Title level={3} class="text-center">
-            Login
-          </Title>
-          <Form
-            name="basic"
-            labelCol={{
-              span: 8,
-            }}
-            wrapperCol={{
-              span: 16,
-            }}
-            style={{
-              maxWidth: 600,
-            }}
-            initialValues={{
-              remember: true,
-            }}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-            autoComplete="off"
+      <nav class="navbar navbar-expand-lg  shadow-lg" style={{backgroundColor:"#98bdff" , color:"white"}}>
+        <div class="container-fluid" style={{backgroundColor:"#98bdff" , color:"white"}}>
+          <a class="navbar-brand" href="/homepage" style={{ color:"white"}}>
+            Admin
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
           >
-            <Form.Item
-              label="Username"
-              name="username"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your username!",
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-
-            <Form.Item
-              label="Password"
-              name="password"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your password!",
-                },
-              ]}
-            >
-              <Input.Password />
-            </Form.Item>
-
-            <Form.Item
-              wrapperCol={{
-                offset: 8,
-                span: 16,
-              }}
-            >
-              <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
-          </Form>
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse"   id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" style={{ color:"white"}} aria-current="page" href="/news">
+                  News🗞️
+                </a>
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  style={{ color:"white"}}
+                >
+                  Data-Upload📂
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" href="/Student">
+                      Student
+                    </a>
+                  </li>
+                  <li>
+                    <hr class="dropdown-divider" />
+                  </li> 
+                  <li>
+                    <a class="dropdown-item" href="/Teacher">
+                      Teachers
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#" style={{ color:"white"}}>
+                  Exam📄
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
+      </nav>
+
+      <Routes>
+        <Route path="/" element={<Login />}></Route>
+        <Route element={<Safe></Safe>}>
+          <Route element={<Homepage />} path="/homepage"></Route>
+          <Route element={<News />} path="/news"></Route>
+          <Route element={<DataUpload />} path="/dataupload"></Route>
+          <Route element={<Student />} path="/Student"></Route>
+          <Route element={<Teacher />} path="/Teacher"></Route>
+        </Route>
+      </Routes>
+      <Fotter />
     </>
   );
 };
+
 export default App;
